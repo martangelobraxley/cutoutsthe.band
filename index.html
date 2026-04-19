@@ -1,31 +1,657 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cutouts</title>
-  <!-- Meta Pixel Code -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '2008562136678229');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=2008562136678229&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Meta Pixel Code -->
-  <script>
-    setTimeout(function() {
-      window.location.href = "https://www.submithub.com/link/cutouts-mia";
-    }, 500);
-  </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cutouts</title>
+<meta name="description" content="cutouts — Music.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,300&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<!-- Meta Pixel — replace YOUR_PIXEL_ID with your actual Pixel ID -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2008562136678229');
+fbq('track', 'PageView');
+fbq('trackCustom', 'StreamPageView', { page: 'cutouts_landing' });
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2008562136678229&ev=PageView&noscript=1"/></noscript>
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --cream: #ede8df; --border: rgba(237,232,223,0.12); --border-active: rgba(237,232,223,0.36); }
+html, body { height: 100%; background: #05040a; font-family: 'Bodoni Moda', serif; color: var(--cream); overflow-x: hidden; }
+body { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+#c-base, #c-fx, #c-vhs { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+#c-base { z-index: 0; } #c-fx { z-index: 1; } #c-vhs { z-index: 2; }
+.vignette { position: fixed; inset: 0; pointer-events: none; z-index: 3; background: radial-gradient(ellipse at 50% 50%, transparent 8%, rgba(2,1,5,0.8) 100%); }
+.grain { position: fixed; inset: 0; z-index: 4; pointer-events: none; opacity: 0.065; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 200px; }
+.page { position: relative; z-index: 10; width: 100%; max-width: 460px; padding: 3.5rem 1.5rem 2.5rem; display: flex; flex-direction: column; align-items: center; }
+.band-name { font-size: clamp(3.8rem, 15vw, 6.5rem); font-weight: 300; font-style: italic; letter-spacing: 0.01em; line-height: 1; color: var(--cream); text-align: center; opacity: 0; animation: fadeUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.1s forwards; text-shadow: 0 0 60px rgba(0,0,0,0.95), 0 2px 16px rgba(0,0,0,0.8); }
+.rule { width: 1px; height: 2rem; background: linear-gradient(to bottom, transparent, rgba(237,232,223,0.25), transparent); margin: 2rem 0; opacity: 0; animation: fadeIn 1s ease 0.4s forwards; }
+.releases { width: 100%; display: flex; flex-direction: column; gap: 0.6rem; opacity: 0; animation: fadeUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.55s forwards; }
+.release { border: 0.5px solid var(--border); background: rgba(3,2,7,0.72); backdrop-filter: blur(22px) saturate(0.55); -webkit-backdrop-filter: blur(22px) saturate(0.55); overflow: hidden; transition: border-color 0.3s; }
+.release.featured {
+  border-color: rgba(237,232,223,0.32);
+  background: rgba(14,9,6,0.82);
+  box-shadow: 0 0 0 0.5px rgba(237,200,140,0.08), 0 0 32px rgba(200,120,40,0.1), inset 0 1px 0 rgba(237,220,180,0.07);
+  animation: featuredPulse 4s ease-in-out infinite;
+}
+@keyframes featuredPulse {
+  0%, 100% { box-shadow: 0 0 0 0.5px rgba(237,200,140,0.08), 0 0 22px rgba(200,120,40,0.08), inset 0 1px 0 rgba(237,220,180,0.06); }
+  50%       { box-shadow: 0 0 0 0.5px rgba(237,200,140,0.18), 0 0 42px rgba(200,120,40,0.18), inset 0 1px 0 rgba(237,220,180,0.12); }
+}
+.release.open, .release.featured.open { border-color: var(--border-active); }
+.release-header { display: flex; align-items: center; gap: 1rem; padding: 1.05rem 1.2rem; cursor: pointer; user-select: none; -webkit-user-select: none; transition: background 0.2s; }
+.release-header:hover { background: rgba(237,232,223,0.04); }
+.release-num { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: rgba(237,232,223,0.42); letter-spacing: 0.18em; min-width: 1.6rem; }
+.release-info { flex: 1; }
+.release-title { font-style: italic; font-weight: 300; font-size: 1.25rem; color: var(--cream); line-height: 1.2; }
+.featured .release-title { font-size: 1.4rem; color: #f0e4c8; }
+.featured .release-sub { color: rgba(220,195,145,0.72); }
+.release-sub { font-family: 'Space Mono', monospace; font-size: 0.52rem; color: rgba(237,232,223,0.72); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
+.release-badge { font-family: 'Space Mono', monospace; font-size: 0.48rem; letter-spacing: 0.13em; text-transform: uppercase; padding: 0.2rem 0.52rem; border: 0.5px solid; white-space: nowrap; }
+.badge-out { color: rgba(237,232,223,0.58); border-color: rgba(237,232,223,0.2); }
+.badge-new {
+  color: #f0d090;
+  border-color: rgba(220,160,60,0.55);
+  background: rgba(200,120,30,0.15);
+  text-shadow: 0 0 10px rgba(220,160,60,0.5);
+  animation: badgeGlow 3s ease-in-out infinite;
+}
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(200,120,30,0.2); }
+  50%       { box-shadow: 0 0 14px rgba(200,120,30,0.45); }
+}
+.chevron { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: rgba(237,232,223,0.48); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), color 0.2s; display: inline-block; }
+.release.open .chevron { transform: rotate(180deg); color: var(--cream); }
+.stream-panel { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1); }
+.release.open .stream-panel { max-height: 320px; }
+.stream-inner { padding: 0.15rem 1.1rem 1rem 1.1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.stream-link { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; padding: 0.85rem 1rem; border: 0.5px solid rgba(237,232,223,0.07); background: rgba(237,232,223,0.02); transition: background 0.2s, border-color 0.2s, transform 0.15s; }
+.stream-link:hover { background: rgba(237,232,223,0.06); border-color: rgba(237,232,223,0.2); transform: translateX(3px); }
+.stream-icon { width: 22px; height: 22px; flex-shrink: 0; }
+.stream-label { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(237,232,223,0.7); transition: color 0.2s; flex: 1; }
+.stream-link:hover .stream-label { color: var(--cream); }
+.stream-arrow { font-family: 'Space Mono', monospace; font-size: 0.62rem; color: rgba(237,232,223,0.38); transition: color 0.2s, transform 0.2s; }
+.stream-link:hover .stream-arrow { color: var(--cream); transform: translateX(3px); }
+.socials { margin-top: 2.2rem; display: flex; align-items: center; gap: 1.4rem; opacity: 0; animation: fadeIn 1.4s ease 1s forwards; }
+.social-link { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; color: rgba(237,232,223,0.42); text-decoration: none; transition: color 0.2s, transform 0.2s; }
+.social-link:hover { color: var(--cream); transform: translateY(-2px); }
+.social-link svg { width: 16px; height: 16px; fill: currentColor; }
+.footer-copy { margin-top: 1.8rem; font-family: 'Space Mono', monospace; font-size: 0.48rem; color: rgba(92,88,80,0.38); letter-spacing: 0.2em; text-transform: uppercase; text-align: center; opacity: 0; animation: fadeIn 1.6s ease 1.2s forwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 480px) { .page { padding: 2.5rem 1rem 2rem; } .stream-link { padding: 0.85rem 0.9rem; } .socials { gap: 1rem; } }
+</style>
 </head>
 <body>
+<canvas id="c-base"></canvas>
+<canvas id="c-fx"></canvas>
+<canvas id="c-vhs"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div class="page">
+  <div class="band-name">cutouts</div>
+  <div class="rule"></div>
+  <div class="releases">
+
+    <div class="release featured" id="r1">
+      <div class="release-header" onclick="toggle('r1','r2')">
+        <div class="release-num">02</div>
+        <div class="release-info"><div class="release-title">Angel Arms</div><div class="release-sub">Single &nbsp;·&nbsp; Apr 2026</div></div>
+        <div class="release-badge badge-new">New</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="stream-panel"><div class="stream-inner">
+        <a class="stream-link" href="https://open.spotify.com/track/73iSuNqvUjUBJGD5BzuX1l?si=6ca583f679614b30" target="_blank" rel="noopener" onclick="event.preventDefault(); trackStream('Angel Arms','Spotify'); deepLink('spotify:track:73iSuNqvUjUBJGD5BzuX1l','https://open.spotify.com/track/73iSuNqvUjUBJGD5BzuX1l?si=6ca583f679614b30')">
+          <svg class="stream-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1DB954"/><path fill="#191414" d="M17.9 10.9C14.7 9 9.35 8.8 6.3 9.75c-.5.15-1-.15-1.15-.6-.15-.5.15-1 .6-1.15 3.55-1.05 9.4-.85 13.1 1.35.45.25.6.85.35 1.3-.25.35-.85.5-1.3.25zm-.1 2.8c-.25.35-.7.5-1.05.25-2.7-1.65-6.8-2.15-9.95-1.15-.4.1-.85-.1-.95-.5-.1-.4.1-.85.5-.95 3.65-1.1 8.15-.55 11.25 1.35.3.15.45.65.2 1zm-1.2 2.75c-.2.3-.55.4-.85.2-2.35-1.45-5.3-1.75-8.8-.95-.35.1-.65-.15-.75-.45-.1-.35.15-.65.45-.75 3.8-.85 7.1-.5 9.7 1.1.3.15.4.55.25.85z"/></svg>
+          <span class="stream-label">Spotify</span><span class="stream-arrow">→</span>
+        </a>
+        <a class="stream-link" href="https://music.apple.com/us/artist/cutouts/1833913474" target="_blank" rel="noopener" onclick="trackStream('Angel Arms','Apple Music')">
+          <svg class="stream-icon" viewBox="0 0 24 24"><defs><linearGradient id="am1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#F94F6D"/><stop offset="100%" stop-color="#E8173D"/></linearGradient></defs><rect width="24" height="24" rx="5.4" fill="url(#am1)"/><path fill="#fff" d="M16.5 5.5 L16.5 14.2 C16.5 15.4 15.5 16.2 14.4 16.2 C13.2 16.2 12.2 15.3 12.2 14.1 C12.2 12.9 13.2 12 14.4 12 C14.9 12 15.3 12.2 15.5 12.3 L15.5 8.2 L9.5 9.8 L9.5 16.7 C9.5 17.9 8.5 18.7 7.4 18.7 C6.2 18.7 5.2 17.8 5.2 16.6 C5.2 15.4 6.2 14.5 7.4 14.5 C7.9 14.5 8.3 14.7 8.5 14.8 L8.5 7.5 Z"/></svg>
+          <span class="stream-label">Apple Music</span><span class="stream-arrow">→</span>
+        </a>
+        <a class="stream-link" href="https://cutoutsmusic.bandcamp.com/track/angel-arms" target="_blank" rel="noopener" onclick="trackStream('Angel Arms','Bandcamp')">
+          <svg class="stream-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#1DA0C3"/><path fill="#fff" d="M2.5 16.5 L9.5 7.5 L21.5 7.5 L14.5 16.5 Z"/></svg>
+          <span class="stream-label">Bandcamp</span><span class="stream-arrow">→</span>
+        </a>
+      </div></div>
+    </div>
+
+    <div class="release" id="r2">
+      <div class="release-header" onclick="toggle('r2','r1')">
+        <div class="release-num">01</div>
+        <div class="release-info"><div class="release-title">MIA</div><div class="release-sub">Single &nbsp;·&nbsp; Mar 2026</div></div>
+        <div class="release-badge badge-out">Out now</div>
+        <div class="chevron">▾</div>
+      </div>
+      <div class="stream-panel"><div class="stream-inner">
+        <a class="stream-link" href="https://open.spotify.com/album/1PYtYfi0YElidNen641XqB?si=DAlVIrTURLCpcdybZWSRoA" target="_blank" rel="noopener" onclick="event.preventDefault(); trackStream('MIA','Spotify'); deepLink('spotify:album:1PYtYfi0YElidNen641XqB','https://open.spotify.com/album/1PYtYfi0YElidNen641XqB?si=DAlVIrTURLCpcdybZWSRoA')">
+          <svg class="stream-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1DB954"/><path fill="#191414" d="M17.9 10.9C14.7 9 9.35 8.8 6.3 9.75c-.5.15-1-.15-1.15-.6-.15-.5.15-1 .6-1.15 3.55-1.05 9.4-.85 13.1 1.35.45.25.6.85.35 1.3-.25.35-.85.5-1.3.25zm-.1 2.8c-.25.35-.7.5-1.05.25-2.7-1.65-6.8-2.15-9.95-1.15-.4.1-.85-.1-.95-.5-.1-.4.1-.85.5-.95 3.65-1.1 8.15-.55 11.25 1.35.3.15.45.65.2 1zm-1.2 2.75c-.2.3-.55.4-.85.2-2.35-1.45-5.3-1.75-8.8-.95-.35.1-.65-.15-.75-.45-.1-.35.15-.65.45-.75 3.8-.85 7.1-.5 9.7 1.1.3.15.4.55.25.85z"/></svg>
+          <span class="stream-label">Spotify</span><span class="stream-arrow">→</span>
+        </a>
+        <a class="stream-link" href="https://music.apple.com/us/album/mia/1884037245?i=1884037247" target="_blank" rel="noopener" onclick="trackStream('MIA','Apple Music')">
+          <svg class="stream-icon" viewBox="0 0 24 24"><defs><linearGradient id="am2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#F94F6D"/><stop offset="100%" stop-color="#E8173D"/></linearGradient></defs><rect width="24" height="24" rx="5.4" fill="url(#am2)"/><path fill="#fff" d="M16.5 5.5 L16.5 14.2 C16.5 15.4 15.5 16.2 14.4 16.2 C13.2 16.2 12.2 15.3 12.2 14.1 C12.2 12.9 13.2 12 14.4 12 C14.9 12 15.3 12.2 15.5 12.3 L15.5 8.2 L9.5 9.8 L9.5 16.7 C9.5 17.9 8.5 18.7 7.4 18.7 C6.2 18.7 5.2 17.8 5.2 16.6 C5.2 15.4 6.2 14.5 7.4 14.5 C7.9 14.5 8.3 14.7 8.5 14.8 L8.5 7.5 Z"/></svg>
+          <span class="stream-label">Apple Music</span><span class="stream-arrow">→</span>
+        </a>
+        <a class="stream-link" href="https://cutoutsmusic.bandcamp.com/track/mia" target="_blank" rel="noopener" onclick="trackStream('MIA','Bandcamp')">
+          <svg class="stream-icon" viewBox="0 0 24 24"><rect width="24" height="24" fill="#1DA0C3"/><path fill="#fff" d="M2.5 16.5 L9.5 7.5 L21.5 7.5 L14.5 16.5 Z"/></svg>
+          <span class="stream-label">Bandcamp</span><span class="stream-arrow">→</span>
+        </a>
+      </div></div>
+    </div>
+
+  </div>
+
+  <div class="socials">
+    <a class="social-link" href="https://www.instagram.com/cutoutstheband/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+    <a class="social-link" href="https://open.spotify.com/artist/7tLUKez6Glnw2JYs8rHazq?si=noZxl1WDRDaSDIGsdl9qlg" target="_blank" rel="noopener" aria-label="Spotify"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></a>
+    <a class="social-link" href="https://www.youtube.com/@cutoutstheband" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg></a>
+    <a class="social-link" href="https://www.facebook.com/cutoutstheband" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    <a class="social-link" href="mailto:cutoutstheband@gmail.com" aria-label="Email us"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a>
+  </div>
+  <div class="footer-copy">cutouts &nbsp;·&nbsp; 2026</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   CUTOUTS — VISUAL ENGINE v5
+   A real moving 3D camera drifting through a generated world.
+   Objects have world-space positions, perspective-projected each frame.
+   New objects spawn far ahead; old ones are recycled when they pass.
+   8 scene types, each camera-aware. Base color: very dark purple.
+   Accents: orange, red, deep violet highlight.
+═══════════════════════════════════════════════════════════════════════ */
+
+const baseC = document.getElementById('c-base'), baseCtx = baseC.getContext('2d');
+const fxC   = document.getElementById('c-fx'),   fxCtx   = fxC.getContext('2d');
+const vhsC  = document.getElementById('c-vhs'),  vhsCtx  = vhsC.getContext('2d');
+
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
+let W = 0, H = 0;
+
+function resize() {
+  const vw = window.innerWidth, vh = window.innerHeight;
+  [baseC, fxC, vhsC].forEach(c => {
+    c.width = vw * DPR; c.height = vh * DPR;
+    c.style.width = vw + 'px'; c.style.height = vh + 'px';
+    c.getContext('2d').setTransform(DPR, 0, 0, DPR, 0, 0);
+  });
+  W = vw; H = vh;
+}
+window.addEventListener('resize', resize);
+
+const rng  = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const css  = (c, a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+/* ══════════════════════════════════════════════════════════════
+   PALETTES
+   Base: very dark indigo/purple (near black)
+   Accent A: burnt orange / deep red
+   Accent B: warm orange
+   Highlight: violet or crimson or amber — never pink, never green
+══════════════════════════════════════════════════════════════ */
+const PALETTES = [
+  [[4,3,12],[16,10,42],[24,16,62],[215,88,22],[255,125,42],[200,140,255]],   // indigo + orange + violet
+  [[7,3,10],[28,8,34],[42,12,50],[188,20,32],[235,38,55],[255,155,110]],     // plum + crimson + coral
+  [[3,4,14],[10,14,48],[14,20,68],[220,102,14],[255,138,36],[255,200,120]],  // navy-purple + amber
+  [[9,3,15],[34,9,46],[50,13,66],[178,15,40],[222,32,58],[195,130,255]],     // dark plum + red + violet
+  [[5,3,8],[20,8,28],[33,12,46],[238,82,16],[255,112,38],[165,125,255]],     // obsidian + deep orange + indigo
+  [[7,5,12],[28,13,36],[42,19,54],[210,50,40],[255,78,62],[255,168,148]],    // charcoal + coral-red
+  [[5,3,9],[22,7,38],[36,11,56],[228,58,18],[255,88,38],[205,155,255]],      // black-violet + orange-red
+  [[9,3,11],[36,7,26],[52,11,40],[248,98,10],[255,132,32],[218,172,255]],    // burgundy + hot orange + lavender
+];
+
+const PAL = pick(PALETTES);
+const C = { bg: PAL[0], mid_a: PAL[1], mid_b: PAL[2], acc_a: PAL[3], acc_b: PAL[4], hi: PAL[5] };
+
+/* ══════════════════════════════════════════════════════════════
+   3D CAMERA — the core of the engine
+══════════════════════════════════════════════════════════════ */
+const CAM = {
+  x: 0, y: 0, z: 0,
+  vx: rng(-0.012, 0.012),
+  vy: rng(-0.008, 0.008),
+  vz: rng(0.45, 0.75),
+  yaw: 0, pitch: 0,
+  yawSpd:   rng(-0.00007, 0.00007),
+  pitchSpd: rng(-0.00004, 0.00004),
+  driftAmp:  rng(0.005, 0.016),
+  driftFreq: rng(0.0003, 0.0007),
+  driftPhase: rng(0, Math.PI * 2),
+  FOV: 520,
+};
+
+function project(wx, wy, wz) {
+  let rx = wx - CAM.x, ry = wy - CAM.y, rz = wz - CAM.z;
+  // yaw
+  const cy = Math.cos(CAM.yaw), sy = Math.sin(CAM.yaw);
+  const rx2 = rx * cy + rz * sy, rz2 = -rx * sy + rz * cy;
+  // pitch
+  const cp = Math.cos(CAM.pitch), sp = Math.sin(CAM.pitch);
+  const ry2 = ry * cp - rz2 * sp, rz3 = ry * sp + rz2 * cp;
+  if (rz3 <= 0.5) return null;
+  const sc = CAM.FOV / rz3;
+  return { sx: W / 2 + rx2 * sc, sy: H / 2 + ry2 * sc, scale: sc, depth: rz3 };
+}
+
+function updateCamera(ts) {
+  const drift = Math.sin(ts * CAM.driftFreq + CAM.driftPhase) * CAM.driftAmp;
+  CAM.x += CAM.vx + drift;
+  CAM.y += CAM.vy + drift * 0.55;
+  CAM.z += CAM.vz;
+  CAM.yaw   += CAM.yawSpd;
+  CAM.pitch += CAM.pitchSpd;
+  if (Math.abs(CAM.yaw)   > 0.2)  CAM.yawSpd   *= -1;
+  if (Math.abs(CAM.pitch) > 0.12) CAM.pitchSpd *= -1;
+}
+
+const SPAWN_D  = 1800;
+const RECYCLE  = 80;
+
+/* ══════════════════════════════════════════════════════════════
+   8 SCENE MODES — all use the camera
+══════════════════════════════════════════════════════════════ */
+const FX_MODES = ['cube_field','crystal_field','ring_portal','star_tunnel','sphere_cluster','hex_plane','waveform_space','plasma_drift'];
+const MODE = pick(FX_MODES);
+
+/* ── 1. CUBE FIELD ── */
+function spawnCube(zo) {
+  return {
+    x: rng(-320,320), y: rng(-220,220),
+    z: zo !== undefined ? zo : CAM.z + SPAWN_D + rng(0,400),
+    size: rng(14,75),
+    ax: rng(0,Math.PI*2), ay: rng(0,Math.PI*2), az: rng(0,Math.PI*2),
+    rx: rng(0.003,0.013), ry: rng(0.002,0.011), rz: rng(0.001,0.007),
+    color: pick([C.acc_a,C.acc_b,C.hi,C.mid_b]),
+    alpha: rng(0.55,0.92),
+  };
+}
+let CUBES = MODE === 'cube_field' ? Array.from({length:55}, () => spawnCube(CAM.z + rng(50,SPAWN_D))) : [];
+
+function drawCubeField() {
+  CUBES.sort((a,b) => b.z - a.z);
+  for (const cube of CUBES) {
+    cube.ax += cube.rx; cube.ay += cube.ry; cube.az += cube.rz;
+    if (cube.z < CAM.z - RECYCLE) { Object.assign(cube, spawnCube()); continue; }
+    const s = cube.size;
+    const verts = [[-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],[-1,-1,1],[1,-1,1],[1,1,1],[-1,1,1]].map(([lx,ly,lz]) => {
+      let y2 = ly*Math.cos(cube.ax) - lz*Math.sin(cube.ax), z2 = ly*Math.sin(cube.ax) + lz*Math.cos(cube.ax);
+      let x3 = lx*Math.cos(cube.ay) + z2*Math.sin(cube.ay), z3 = -lx*Math.sin(cube.ay) + z2*Math.cos(cube.ay);
+      let x4 = x3*Math.cos(cube.az) - y2*Math.sin(cube.az), y4 = x3*Math.sin(cube.az) + y2*Math.cos(cube.az);
+      return project(cube.x + x4*s, cube.y + y4*s, cube.z + z3*s*0.5);
+    });
+    if (verts.some(v => !v)) continue;
+    const dz = cube.z - CAM.z;
+    const da = clamp(1 - dz/SPAWN_D, 0.04, 1) * cube.alpha;
+    if (da < 0.03) continue;
+    const faces = [[0,1,2,3],[4,5,6,7],[0,1,5,4],[2,3,7,6],[0,3,7,4],[1,2,6,5]];
+    const fd = faces.map(f => f.reduce((a,i) => a + (verts[i]?.sy||0), 0)/4);
+    [...faces.keys()].sort((a,b) => fd[b]-fd[a]).forEach((fi, order) => {
+      const f = faces[fi], shade = 0.28 + order * 0.13;
+      fxCtx.beginPath();
+      f.forEach((vi,j) => { const p = verts[vi]; j===0?fxCtx.moveTo(p.sx,p.sy):fxCtx.lineTo(p.sx,p.sy); });
+      fxCtx.closePath();
+      fxCtx.fillStyle = css(cube.color, da*shade); fxCtx.fill();
+      fxCtx.strokeStyle = css(C.hi, da*0.75); fxCtx.lineWidth = 0.8; fxCtx.stroke();
+    });
+    if (dz < 500) {
+      fxCtx.shadowColor = css(cube.color, (1-dz/500)*0.4*da);
+      fxCtx.shadowBlur = 14;
+    }
+    fxCtx.shadowBlur = 0;
+  }
+}
+
+/* ── 2. CRYSTAL FIELD ── */
+function spawnCrystal(zo) {
+  const n = Math.floor(rng(3,7)), r = rng(20,115);
+  const pts = Array.from({length:n}, (_,i) => { const a=(i/n)*Math.PI*2+rng(-0.32,0.32),d=rng(r*0.5,r); return [Math.cos(a)*d, Math.sin(a)*d]; });
+  return { x:rng(-400,400), y:rng(-270,270), z: zo!==undefined?zo:CAM.z+SPAWN_D+rng(0,300), pts, rot:rng(0,Math.PI*2), rspd:rng(-0.005,0.005), color:pick([C.acc_a,C.acc_b,C.hi]), alpha:rng(0.5,0.88) };
+}
+let CRYSTALS = MODE === 'crystal_field' ? Array.from({length:70}, () => spawnCrystal(CAM.z + rng(30,SPAWN_D))) : [];
+
+function drawCrystalField() {
+  CRYSTALS.sort((a,b) => b.z - a.z);
+  for (const cr of CRYSTALS) {
+    cr.rot += cr.rspd;
+    if (cr.z < CAM.z - RECYCLE) { Object.assign(cr, spawnCrystal()); continue; }
+    const proj = project(cr.x, cr.y, cr.z);
+    if (!proj) continue;
+    const da = clamp(1-(cr.z-CAM.z)/SPAWN_D, 0.03, 1) * cr.alpha;
+    if (da < 0.03) continue;
+    fxCtx.save(); fxCtx.translate(proj.sx, proj.sy); fxCtx.rotate(cr.rot); fxCtx.scale(proj.scale, proj.scale);
+    fxCtx.beginPath();
+    cr.pts.forEach(([px,py],i) => i===0?fxCtx.moveTo(px,py):fxCtx.lineTo(px,py));
+    fxCtx.closePath();
+    const g = fxCtx.createLinearGradient(-80,-80,80,80);
+    g.addColorStop(0, css(cr.color, da*1.4)); g.addColorStop(0.5, css(C.hi, da*0.22)); g.addColorStop(1, css(cr.color, da*0.7));
+    fxCtx.fillStyle = g; fxCtx.fill();
+    fxCtx.strokeStyle = css(C.hi, da*1.6); fxCtx.lineWidth = 0.8/proj.scale; fxCtx.stroke();
+    fxCtx.restore();
+  }
+}
+
+/* ── 3. RING PORTALS ── */
+function spawnRing(zo) {
+  return { x:rng(-200,200), y:rng(-130,130), z:zo!==undefined?zo:CAM.z+SPAWN_D+rng(0,500),
+    r:rng(45,240), rot:rng(0,Math.PI*2), rspd:rng(-0.007,0.007), tilt:rng(-0.55,0.55),
+    sides:pick([0,0,0,3,4,5,6,8]), color:pick([C.acc_a,C.acc_b,C.hi]), thick:rng(0.8,3.8), alpha:rng(0.45,0.92) };
+}
+let RINGS = MODE === 'ring_portal' ? Array.from({length:40}, () => spawnRing(CAM.z + rng(20,SPAWN_D))) : [];
+
+function drawRingPortals() {
+  RINGS.sort((a,b) => b.z-a.z);
+  for (const ring of RINGS) {
+    ring.rot += ring.rspd;
+    if (ring.z < CAM.z - RECYCLE) { Object.assign(ring, spawnRing()); continue; }
+    const proj = project(ring.x, ring.y, ring.z);
+    if (!proj) continue;
+    const dz = ring.z - CAM.z;
+    const da = clamp(1-dz/SPAWN_D, 0.03, 1) * ring.alpha;
+    if (da < 0.03) continue;
+    const sr = ring.r * proj.scale;
+    fxCtx.save(); fxCtx.translate(proj.sx, proj.sy);
+    fxCtx.scale(1, Math.abs(Math.cos(ring.tilt + ring.rot*0.25)));
+    fxCtx.strokeStyle = css(ring.color, da*0.28); fxCtx.lineWidth = ring.thick*proj.scale*7;
+    fxCtx.beginPath();
+    if (ring.sides === 0) { fxCtx.arc(0,0,sr,0,Math.PI*2); }
+    else { for(let i=0;i<=ring.sides;i++){const a=ring.rot+(i/ring.sides)*Math.PI*2; i===0?fxCtx.moveTo(Math.cos(a)*sr,Math.sin(a)*sr):fxCtx.lineTo(Math.cos(a)*sr,Math.sin(a)*sr);} fxCtx.closePath(); }
+    fxCtx.stroke();
+    fxCtx.strokeStyle = css(ring.color, da); fxCtx.lineWidth = ring.thick*proj.scale; fxCtx.stroke();
+    if (dz < 280) { fxCtx.fillStyle = css(ring.color, (1-dz/280)*da*0.07); fxCtx.fill(); }
+    fxCtx.restore();
+  }
+}
+
+/* ── 4. STAR TUNNEL (hyperspace streaks) ── */
+function spawnStar(zo) {
+  const ang = Math.random()*Math.PI*2, dist = rng(8,420);
+  return { x:Math.cos(ang)*dist, y:Math.sin(ang)*dist, z:zo!==undefined?zo:CAM.z+SPAWN_D+rng(0,200),
+    r:rng(0.5,2.8), color:pick([C.hi,C.acc_a,C.acc_b,[237,232,223]]), alpha:rng(0.5,1), prev:null };
+}
+let STARS = MODE === 'star_tunnel' ? Array.from({length:400}, () => spawnStar(CAM.z + rng(20,SPAWN_D))) : [];
+
+function drawStarTunnel() {
+  for (const s of STARS) {
+    if (s.z < CAM.z - RECYCLE) { s.prev=null; Object.assign(s, spawnStar()); continue; }
+    const proj = project(s.x, s.y, s.z);
+    if (!proj) { s.prev=null; continue; }
+    const da = clamp(1-(s.z-CAM.z)/SPAWN_D, 0.02, 1) * s.alpha;
+    if (s.prev && da > 0.08) {
+      fxCtx.beginPath(); fxCtx.moveTo(s.prev.sx, s.prev.sy); fxCtx.lineTo(proj.sx, proj.sy);
+      const grad = fxCtx.createLinearGradient(s.prev.sx, s.prev.sy, proj.sx, proj.sy);
+      grad.addColorStop(0, css(s.color, 0)); grad.addColorStop(1, css(s.color, da*0.9));
+      fxCtx.strokeStyle = grad; fxCtx.lineWidth = s.r*proj.scale*0.9; fxCtx.stroke();
+    }
+    const dotR = s.r * proj.scale * 0.5;
+    if (dotR > 0.1) { fxCtx.beginPath(); fxCtx.arc(proj.sx,proj.sy,dotR,0,Math.PI*2); fxCtx.fillStyle=css(s.color,da); fxCtx.fill(); }
+    s.prev = { sx: proj.sx, sy: proj.sy };
+  }
+}
+
+/* ── 5. SPHERE CLUSTER ── */
+function spawnSphere(zo) {
+  return { x:rng(-370,370), y:rng(-250,250), z:zo!==undefined?zo:CAM.z+SPAWN_D+rng(0,300),
+    r:rng(7,58), color:pick([C.acc_a,C.acc_b,C.hi,C.mid_b]), alpha:rng(0.42,0.88),
+    pp:rng(0,Math.PI*2), ps:rng(0.001,0.005) };
+}
+let SPHERES = MODE === 'sphere_cluster' ? Array.from({length:80}, () => spawnSphere(CAM.z+rng(20,SPAWN_D))) : [];
+
+function drawSphereCluster(ts) {
+  SPHERES.sort((a,b) => b.z-a.z);
+  for (const sp of SPHERES) {
+    if (sp.z < CAM.z - RECYCLE) { Object.assign(sp, spawnSphere()); continue; }
+    const proj = project(sp.x,sp.y,sp.z);
+    if (!proj) continue;
+    const da = clamp(1-(sp.z-CAM.z)/SPAWN_D, 0.03, 1) * sp.alpha;
+    if (da < 0.03) continue;
+    const pulse = 0.82 + 0.18*Math.sin(ts*sp.ps+sp.pp);
+    const pr = sp.r * proj.scale * pulse;
+    const g = fxCtx.createRadialGradient(proj.sx,proj.sy,0,proj.sx,proj.sy,pr*3.2);
+    g.addColorStop(0, css(sp.color, da*0.65)); g.addColorStop(0.4, css(sp.color,da*0.28)); g.addColorStop(1, css(sp.color,0));
+    fxCtx.fillStyle=g; fxCtx.beginPath(); fxCtx.arc(proj.sx,proj.sy,pr*3.2,0,Math.PI*2); fxCtx.fill();
+    const g2 = fxCtx.createRadialGradient(proj.sx-pr*0.28,proj.sy-pr*0.28,0,proj.sx,proj.sy,pr);
+    g2.addColorStop(0,css(C.hi,da)); g2.addColorStop(0.5,css(sp.color,da*0.9)); g2.addColorStop(1,css(sp.color,da*0.3));
+    fxCtx.fillStyle=g2; fxCtx.beginPath(); fxCtx.arc(proj.sx,proj.sy,pr,0,Math.PI*2); fxCtx.fill();
+  }
+}
+
+/* ── 6. HEX PLANE ── */
+function drawHexPlane(ts) {
+  const hSize = 44;
+  const planeZ = Math.floor(CAM.z/(hSize*2)) * hSize*2;
+  for (let dz = 0; dz < SPAWN_D; dz += hSize*2) {
+    const wz = planeZ + dz;
+    const da = clamp(1 - dz/SPAWN_D, 0, 1) * 0.65;
+    if (da < 0.02) continue;
+    const refProj = project(0, 0, wz);
+    if (!refProj) continue;
+    const cols = Math.ceil(2.8/refProj.scale)+2, rows = Math.ceil(2/refProj.scale)+2;
+    for (let r=-rows; r<=rows; r++) for (let c=-cols; c<=cols; c++) {
+      const wx=c*hSize*1.732+(r%2)*hSize*0.866, wy=r*hSize*1.5;
+      const hp = project(wx,wy,wz);
+      if (!hp) continue;
+      const pf = (Math.sin(ts*0.0011+c*0.38+r*0.55)+1)/2;
+      const ha = da*(0.14+pf*0.26), hs = hSize*hp.scale;
+      fxCtx.beginPath();
+      for (let i=0;i<6;i++){const a=Math.PI/180*(60*i-30); i===0?fxCtx.moveTo(hp.sx+hs*Math.cos(a),hp.sy+hs*Math.sin(a)):fxCtx.lineTo(hp.sx+hs*Math.cos(a),hp.sy+hs*Math.sin(a));}
+      fxCtx.closePath();
+      if (pf > 0.72) { fxCtx.fillStyle=css(C.acc_a,ha*0.38); fxCtx.fill(); }
+      fxCtx.strokeStyle=css(C.acc_b,ha*1.9); fxCtx.lineWidth=0.7; fxCtx.stroke();
+    }
+  }
+}
+
+/* ── 7. WAVEFORM SPACE ── */
+const WAVES = Array.from({length:10}, () => ({
+  freq: rng(0.005,0.018), amp: rng(35,130), speed: rng(0.0005,0.002)*(Math.random()>0.5?1:-1),
+  phase: rng(0,Math.PI*2), yOff: rng(-190,190), color: pick([C.acc_a,C.acc_b,C.hi]),
+  alpha: rng(0.3,0.65), thick: rng(1,3), depth: rng(200,SPAWN_D-100),
+}));
+
+function drawWaveformSpace(ts) {
+  for (const wv of WAVES) {
+    const worldZ = CAM.z + wv.depth;
+    const lp = project(-700,wv.yOff,worldZ);
+    if (!lp) continue;
+    const da = clamp(1-wv.depth/SPAWN_D, 0.02, 1) * wv.alpha;
+    if (da < 0.03) continue;
+    fxCtx.beginPath();
+    let first = true;
+    for (let i=0; i<=160; i++) {
+      const t=i/160, wx=lerp(-700,700,t);
+      const wy = wv.yOff + Math.sin(wx*wv.freq+ts*wv.speed+wv.phase)*wv.amp + Math.sin(wx*wv.freq*2.2-ts*wv.speed*0.75)*wv.amp*0.3;
+      const p = project(wx,wy,worldZ);
+      if (!p) continue;
+      if (first) { fxCtx.moveTo(p.sx,p.sy); first=false; } else { fxCtx.lineTo(p.sx,p.sy); }
+    }
+    fxCtx.strokeStyle=css(wv.color,da*0.32); fxCtx.lineWidth=wv.thick*lp.scale*7; fxCtx.stroke();
+    fxCtx.strokeStyle=css(wv.color,da); fxCtx.lineWidth=wv.thick*lp.scale; fxCtx.stroke();
+  }
+}
+
+/* ── 8. PLASMA DRIFT ── */
+const plasmaC = document.createElement('canvas'); plasmaC.width=80; plasmaC.height=55;
+const plasmaX = plasmaC.getContext('2d');
+const plasmaD = plasmaX.createImageData(80,55);
+
+const PPARTS = Array.from({length:180}, () => ({
+  x:rng(-420,420), y:rng(-290,290), z:CAM.z+rng(20,SPAWN_D),
+  vx:rng(-0.35,0.35), vy:rng(-0.28,0.28),
+  r:rng(1.5,5), color:pick([C.acc_a,C.acc_b,C.hi]), alpha:rng(0.5,0.92),
+}));
+
+function drawPlasmaDrift(ts) {
+  const t = ts * 0.00038;
+  const d = plasmaD.data;
+  for (let y=0;y<55;y++) for(let x=0;x<80;x++) {
+    const nx=x/80,ny=y/55;
+    const v=(Math.sin(nx*6+t)+Math.sin(ny*5-t*0.82)+Math.sin((nx+ny)*7+t*1.12)+Math.sin(Math.sqrt((nx-0.5)**2+(ny-0.5)**2)*10-t))/4;
+    const f=(v+1)/2, idx=(y*80+x)*4;
+    d[idx]=Math.round(lerp(C.mid_b[0],C.acc_a[0],f));
+    d[idx+1]=Math.round(lerp(C.mid_b[1],C.acc_a[1],f));
+    d[idx+2]=Math.round(lerp(C.mid_b[2],C.acc_a[2],f));
+    d[idx+3]=Math.round(95+f*75);
+  }
+  plasmaX.putImageData(plasmaD,0,0);
+  fxCtx.globalAlpha=0.5; fxCtx.drawImage(plasmaC,0,0,W,H); fxCtx.globalAlpha=1;
+  for (const p of PPARTS) {
+    p.x+=p.vx; p.y+=p.vy;
+    if (p.z < CAM.z-RECYCLE) { p.z=CAM.z+SPAWN_D+rng(0,200); p.x=rng(-420,420); p.y=rng(-290,290); }
+    const proj=project(p.x,p.y,p.z);
+    if (!proj) continue;
+    const da=clamp(1-(p.z-CAM.z)/SPAWN_D, 0.04, 1)*p.alpha;
+    if (da<0.04) continue;
+    const pr=p.r*proj.scale;
+    const g=fxCtx.createRadialGradient(proj.sx,proj.sy,0,proj.sx,proj.sy,pr*4);
+    g.addColorStop(0,css(p.color,da*0.55)); g.addColorStop(1,css(p.color,0));
+    fxCtx.fillStyle=g; fxCtx.beginPath(); fxCtx.arc(proj.sx,proj.sy,pr*4,0,Math.PI*2); fxCtx.fill();
+    fxCtx.fillStyle=css(p.color,da); fxCtx.beginPath(); fxCtx.arc(proj.sx,proj.sy,pr,0,Math.PI*2); fxCtx.fill();
+  }
+}
+
+/* ── FX DISPATCHER ── */
+function drawFx(ts) {
+  fxCtx.clearRect(0,0,W,H);
+  switch(MODE) {
+    case 'cube_field':     drawCubeField(); break;
+    case 'crystal_field':  drawCrystalField(); break;
+    case 'ring_portal':    drawRingPortals(); break;
+    case 'star_tunnel':    drawStarTunnel(); break;
+    case 'sphere_cluster': drawSphereCluster(ts); break;
+    case 'hex_plane':      drawHexPlane(ts); break;
+    case 'waveform_space': drawWaveformSpace(ts); break;
+    case 'plasma_drift':   drawPlasmaDrift(ts); break;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BASE LAYER — very dark, palette-tinted
+══════════════════════════════════════════════════════════════ */
+const BASE_STYLES = ['dual','vortex','diagonal'];
+const BASE_STYLE  = pick(BASE_STYLES);
+
+function drawBase(ts) {
+  baseCtx.fillStyle = css(C.bg);
+  baseCtx.fillRect(0,0,W,H);
+  if (BASE_STYLE === 'dual') {
+    [[C.mid_a,0.000055,0.22,0.28],[C.mid_b,0.000042,0.78,0.72]].forEach(([col,spd,px,py]) => {
+      const cx=(px+Math.sin(ts*spd)*0.2)*W, cy=(py+Math.cos(ts*spd*0.68)*0.18)*H;
+      const g=baseCtx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.76);
+      g.addColorStop(0,css(col,0.72)); g.addColorStop(0.6,css(col,0.26)); g.addColorStop(1,css(col,0));
+      baseCtx.fillStyle=g; baseCtx.fillRect(0,0,W,H);
+    });
+  } else if (BASE_STYLE === 'diagonal') {
+    const a=ts*0.000022;
+    const g=baseCtx.createLinearGradient(Math.cos(a)*W,Math.sin(a)*H,Math.cos(a+Math.PI)*W,Math.sin(a+Math.PI)*H);
+    g.addColorStop(0,css(C.mid_a,0.62)); g.addColorStop(0.5,css(C.bg,0)); g.addColorStop(1,css(C.mid_b,0.52));
+    baseCtx.fillStyle=g; baseCtx.fillRect(0,0,W,H);
+  } else {
+    for (let i=0;i<3;i++) {
+      const ang=ts*0.000032*(i+1)+i*Math.PI*2/3, r=Math.min(W,H)*0.3;
+      const cx=W*0.5+Math.cos(ang)*r*0.44, cy=H*0.5+Math.sin(ang)*r*0.38;
+      const col=[C.mid_a,C.mid_b,C.acc_a][i];
+      const g=baseCtx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.48);
+      g.addColorStop(0,css(col,0.48)); g.addColorStop(1,css(col,0));
+      baseCtx.fillStyle=g; baseCtx.fillRect(0,0,W,H);
+    }
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   VHS OVERLAY
+══════════════════════════════════════════════════════════════ */
+const DUST = Array.from({length:65},()=>({
+  x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight,
+  vx:(Math.random()-0.5)*0.28, vy:(Math.random()-0.5)*0.2,
+  r:rng(0.15,1.3), cx:(Math.random()-0.5)*5, cy:(Math.random()-0.5)*1.6,
+  aR:rng(0.05,0.26), aG:rng(0.01,0.06), aB:rng(0.04,0.22),
+  ft:Math.random()*1000, fs:rng(0.001,0.004),
+}));
+let glitchLines=[], glitchTimer=0;
+let signalDrop={active:false,y:0,h:0,alpha:0}, dropTimer=0;
+
+function drawVhs(ts) {
+  vhsCtx.clearRect(0,0,W,H);
+  vhsCtx.fillStyle='rgba(0,0,0,0.019)';
+  for(let y=0;y<H;y+=3) vhsCtx.fillRect(0,y,W,1);
+  for(const p of DUST) {
+    p.x=(p.x+p.vx+W)%W; p.y=(p.y+p.vy+H)%H;
+    const fl=0.55+0.45*Math.sin(ts*p.fs+p.ft);
+    vhsCtx.beginPath(); vhsCtx.arc(p.x+p.cx,p.y+p.cy,p.r,0,Math.PI*2); vhsCtx.fillStyle=`rgba(255,55,55,${p.aR*fl})`; vhsCtx.fill();
+    vhsCtx.beginPath(); vhsCtx.arc(p.x,p.y,p.r*0.7,0,Math.PI*2); vhsCtx.fillStyle=`rgba(130,190,255,${p.aG*fl})`; vhsCtx.fill();
+    vhsCtx.beginPath(); vhsCtx.arc(p.x-p.cx,p.y-p.cy,p.r,0,Math.PI*2); vhsCtx.fillStyle=`rgba(55,55,255,${p.aB*fl})`; vhsCtx.fill();
+  }
+  glitchTimer++;
+  if(glitchTimer>82&&Math.random()<0.07){
+    const n=Math.random()<0.25?Math.floor(rng(2,4)):1;
+    for(let i=0;i<n;i++) glitchLines.push({y:Math.random()*H,alpha:0.07+Math.random()*0.14,ht:1+Math.random()*4,shift:Math.random()<0.4?(Math.random()-0.5)*22:0,decay:0.73+Math.random()*0.1});
+    glitchTimer=0;
+  }
+  glitchLines=glitchLines.filter(gl=>{
+    if(gl.alpha<0.002) return false;
+    vhsCtx.fillStyle=`rgba(255,20,20,${gl.alpha*0.5})`; vhsCtx.fillRect(0,gl.y-1,W,1);
+    vhsCtx.fillStyle=`rgba(210,188,255,${gl.alpha})`; vhsCtx.fillRect(gl.shift,gl.y,W,gl.ht);
+    vhsCtx.fillStyle=`rgba(20,20,255,${gl.alpha*0.5})`; vhsCtx.fillRect(0,gl.y+gl.ht,W,1);
+    gl.alpha*=gl.decay; return true;
+  });
+  dropTimer++;
+  if(dropTimer>275&&Math.random()<0.018){signalDrop={active:true,y:Math.random()*H,h:rng(4,22),alpha:0.6}; dropTimer=0;}
+  if(signalDrop.active){
+    vhsCtx.fillStyle=`rgba(0,0,0,${signalDrop.alpha})`; vhsCtx.fillRect(0,signalDrop.y,W,signalDrop.h);
+    vhsCtx.fillStyle=`rgba(255,95,0,${signalDrop.alpha*0.45})`; vhsCtx.fillRect(0,signalDrop.y-1,W,1);
+    vhsCtx.fillStyle=`rgba(0,55,255,${signalDrop.alpha*0.45})`; vhsCtx.fillRect(0,signalDrop.y+signalDrop.h,W,1);
+    signalDrop.alpha*=0.81; if(signalDrop.alpha<0.01) signalDrop.active=false;
+  }
+  const ca=1.5+Math.sin(ts*0.0009)*1.1;
+  vhsCtx.globalCompositeOperation='screen';
+  vhsCtx.fillStyle=`rgba(255,0,0,0.007)`; vhsCtx.fillRect(ca,0,W,H);
+  vhsCtx.fillStyle=`rgba(0,0,255,0.007)`; vhsCtx.fillRect(-ca,0,W,H);
+  vhsCtx.globalCompositeOperation='source-over';
+}
+
+/* ── MAIN LOOP ── */
+function loop(ts) {
+  updateCamera(ts);
+  drawBase(ts);
+  drawFx(ts);
+  drawVhs(ts);
+  requestAnimationFrame(loop);
+}
+
+/* ── DEEP LINKS ── */
+function deepLink(appUri, webUrl) {
+  window.location = appUri;
+  setTimeout(() => window.open(webUrl, '_blank'), 500);
+}
+
+/* ── META PIXEL STREAM TRACKING ── */
+function trackStream(song, platform) {
+  if (typeof fbq !== 'undefined') {
+    fbq('trackCustom', 'StreamLinkClick', { song, platform, page: 'cutouts_landing' });
+  }
+}
+
+/* ── UI ── */
+function toggle(openId, closeId) {
+  const o=document.getElementById(openId), c=document.getElementById(closeId);
+  c.classList.remove('open');
+  o.classList.toggle('open', !o.classList.contains('open'));
+}
+
+resize();
+requestAnimationFrame(loop);
+</script>
 </body>
 </html>
