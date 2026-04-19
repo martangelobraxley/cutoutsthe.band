@@ -640,6 +640,8 @@ function deepLink(appUri, webUrl) {
 function trackStream(song, platform) {
   if (typeof fbq !== 'undefined') {
     fbq('trackCustom', 'StreamLinkClick', { song, platform, page: 'cutouts_landing' });
+    const eventName = platform.replace(/\s+/g, '') + 'Click';
+    fbq('trackCustom', eventName, { song, page: 'cutouts_landing' });
   }
 }
 
